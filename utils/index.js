@@ -3,7 +3,7 @@ export const chartData = (labels, data) => {
       labels,
       datasets: [
         {
-          label: 'BTC prices',
+          label: 'BTC rates',
           fill: false,
           lineTension: 0.1,
           backgroundColor: 'rgba(75,192,192,0.4)',
@@ -27,3 +27,29 @@ export const chartData = (labels, data) => {
     };
     return setChartCata;
   }
+
+export const units = [
+  {
+    id: "eur",
+    value: "EUR",
+    selected: true,
+  },
+  {
+    id: "usd",
+    value: "USD",
+    selected: false,
+  },
+  {
+    id: "gbp",
+    value: "GBP",
+    selected: false,
+  },
+];
+
+export const getTimeFromDate = (dateNow) => {
+  const date = new Date(dateNow);
+  const minutes = date.getMinutes();
+  const hours = date.getHours();
+  const formattedDate = `${hours} : ${minutes}`
+  return formattedDate;
+}

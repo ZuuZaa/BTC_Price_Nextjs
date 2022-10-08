@@ -1,69 +1,12 @@
 import styles from "../styles/Home.module.scss";
-import { Line } from 'react-chartjs-2';
-import { CategoryScale } from "chart.js";
-import Chart from 'chart.js/auto';
-import { chartData } from "../utils";
-import { FaArrowDown } from "react-icons/fa";
-import { FaArrowUp } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { CurrencyUnit } from "../components/CurrencyUnit";
+import { Line } from "react-chartjs-2";
+import { CategoryScale } from "chart.js";
+import Chart from "chart.js/auto";
+import { chartData, getTimeFromDate, units } from "../utils";
+import { FaArrowDown, FaArrowUp, FaAngleDown, FaAngleUp } from "react-icons/fa";
 
 Chart.register(CategoryScale);
-
-function Home({ btcData, chartItemsData }) {
-  const prices = chartItemsData.prices;
-  const chartItems = { index: [], price: [] };
-  prices.map((item) => {
-    chartItems.index.push(item[0]);
-    chartItems.price.push(item[1]);
-  });
-  const [ unit, setUnit] = useState("EUR");
-  const [ rate, setRate] = useState("")
-  useEffect(()=> {
-    setRate(btcData.bpi[unit].rate)
-  },[unit])
-
-  const units = [
-    {
-      id: "eur",
-      value: "EUR"
-    },
-    {
-      id: "usd",
-      value: "USD"
-    },
-    {
-      id: "gbp",
-      value: "GBP"
-    }
-  ]
-const getSelectValue = (e) => setUnit(e.target.value)
-  const lastRate = chartItems.price[chartItems.price.length - 1]
-  const previousRate = chartItems.price[chartItems.price.length - 2]
-
-  return (
-    <div className={styles.container}>
-      <div className={styles.charContainer}>
-      
-
-
-      <h1>Bitcoin to 
-        <CurrencyUnit/>
-      </h1>
-      <h3>
-        {rate}
-        {lastRate > previousRate ? <FaArrowUp/> : <FaArrowDown/>}
-      </h3>
-      <small>{btcData.time.updated}</small>
-        <Line
-          data={chartData(chartItems.index, chartItems.price)}
-          width={4}
-          height={2}
-        />
-      </div>
-    </div>
-  );
-}
 
 export async function getStaticProps() {
   const chartItemsRes = await fetch(
@@ -81,6 +24,83 @@ export async function getStaticProps() {
       btcData,
     },
   };
+}
+
+const Home = ({ btcData, chartItemsData }) => {
+  const prices = chartItemsData.prices;
+  const chartItems = { index: [], price: [] };
+  prices.map((item) => {
+    chartItems.index.push(getTimeFromDate(item[0]));
+    chartItems.price.push(item[1]);
+  });
+  const [unit, setUnit] = useState("EUR");
+  const [rate, setRate] = useState("");
+  useEffect(() => {
+    setRate(btcData.bpi[unit].rate);
+  }, [unit]);
+
+  const [showOptions, setShowOptions] = useState(false);
+  const [selecteUnit, setSelectedUnit] = useState(
+    units.filter((item) => item.selected)[0]
+  );
+  const openSelectBox = () => setShowOptions(!showOptions);
+  const switchCurrency = (id) => {
+    const currentUnit = units.filter((item) => item.id === id)[0];
+    selecteUnit.selected = false;
+    currentUnit.selected = true;
+    setSelectedUnit(currentUnit);
+    setShowOptions(!showOptions);
+    setUnit(currentUnit.value)
+  };
+
+  //console.log(Object.keys(btcData.bpi))
+
+  const lastRate = chartItems.price[chartItems.price.length - 1];
+  const previousRate = chartItems.price[chartItems.price.length - 2];
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.chartContainer}>
+        <div className={styles.header}>
+          <h1>
+            Bitcoin to
+            <ul name="units" className={styles.units}>
+              <li onClick={openSelectBox}>
+                {selecteUnit.value}
+                {showOptions ? <FaAngleUp /> : <FaAngleDown />}
+              </li>
+              <li className={styles.optionsWrapper}>
+                <ul className={styles.options}>
+                  {showOptions &&
+                    units.map((item) => (
+                      <li
+                        value={item.value}
+                        key={item.id}
+                        className="option"
+                        onClick={() => switchCurrency(item.id)}
+                      >
+                        {item.value}
+                      </li>
+                    ))}
+                </ul>
+              </li>
+            </ul>
+          </h1>
+          <h3>
+            {rate}
+            {lastRate > previousRate ? <FaArrowUp /> : <FaArrowDown />}
+          </h3>
+          <small>{btcData.time.updated}</small>
+        </div>
+
+        <Line
+          data={chartData(chartItems.index, chartItems.price)}
+          width={4}
+          height={2}
+        />
+      </div>
+    </div>
+  );
 }
 
 export default Home;

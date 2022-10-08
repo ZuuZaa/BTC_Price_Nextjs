@@ -4,7 +4,6 @@ import { FaAngleDown } from "react-icons/fa";
 import { FaAngleUp } from "react-icons/fa";
 export const CurrencyUnit = () => {
 
-
     const units = [
         {
           id: "eur",
