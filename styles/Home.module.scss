@@ -1,0 +1,27 @@
+.container {
+  padding: 0 2rem;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .charContainer {
+    width: 50%;
+    h1{
+      select, option {
+        border: none;
+        background: transparent;
+        color: rgba(75,192,192,1);
+        outline: none;
+        cursor: pointer;
+        margin-left: 2rem;
+        font-size: large;
+      }
+    }
+    h3 {
+      svg {
+        margin-left: 2rem;
+      }
+    }
+  }
+}
+
