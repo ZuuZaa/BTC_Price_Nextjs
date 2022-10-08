@@ -6,6 +6,7 @@ import { chartData } from "../utils";
 import { FaArrowDown } from "react-icons/fa";
 import { FaArrowUp } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { CurrencyUnit } from "../components/CurrencyUnit";
 
 Chart.register(CategoryScale);
 
@@ -43,14 +44,11 @@ const getSelectValue = (e) => setUnit(e.target.value)
   return (
     <div className={styles.container}>
       <div className={styles.charContainer}>
+      
+
+
       <h1>Bitcoin to 
-        <select onChange={getSelectValue}>
-          {
-            units.map(
-              item => <option key={item.id} value={item.value}>{item.value}</option>
-            )
-          }
-        </select>
+        <CurrencyUnit/>
       </h1>
       <h3>
         {rate}
