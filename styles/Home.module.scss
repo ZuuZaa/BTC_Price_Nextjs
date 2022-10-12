@@ -5,38 +5,27 @@
   justify-content: center;
   align-items: center;
   .chartContainer {
-    width: 50%;
-    border: .1rem solid rgba(74, 191, 191, 0.2);
-    border-radius: .5rem;
+    border: 0.1rem solid rgba(74, 191, 191, 0.2);
+    border-radius: 0.5rem;
     padding: 3rem;
-    .header{
+    .header {
       h1 {
         display: flex;
         position: relative;
-        font-size: 3.6rem;
         font-weight: 500;
         user-select: none;
         .units {
-          margin-left: 2rem;
           cursor: pointer;
           li {
             display: flex;
             align-items: center;
-            svg {
-              margin-left: 1rem;
-              font-size: 2.4rem;
-            }
             .options {
               position: absolute;
-              top: 4rem;
               flex-direction: column;
               z-index: 3;
               background: #383838;
-  
               li {
-                font-size: 2.2rem;
                 font-weight: 300;
-                padding: 0.3rem 3rem;
                 border: 0.1rem solid #212121;
               }
               li:hover {
@@ -47,18 +36,85 @@
         }
       }
       h3 {
-        font-size: 2.2rem;
         padding: 1rem 0;
+        font-weight: 500;
         svg {
           margin-left: 2rem;
         }
       }
       small {
-        font-size: 1.2rem;
         display: inline-block;
         margin-bottom: 5rem;
       }
     }
+  }
+}
 
+@media screen and (min-width: 320px) {
+  .chartContainer {
+   width: 90%;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .chartContainer {
+    width: 70%;
+    h1 {
+      font-size: 2.2rem;
+      .units {
+        margin-left: 1rem;
+        li {
+          svg {
+            margin-left: .7rem;
+            font-size: 1.4rem;
+          }
+          .options {
+            top: 2.4rem;
+            li {
+              font-size: 1.1rem;
+              padding: 0.3rem 2rem;
+            }
+          }
+        }
+      }
+    }
+    h3 {
+      font-size: 1.6rem;
+    }
+    small {
+      font-size: 1rem;
+      margin-bottom: 3rem;
+    }
+  }
+}
+@media screen and (min-width: 768px) {
+  .chartContainer {
+    width: 50%;
+    h1 {
+      font-size: 3.2rem;
+      .units {
+        margin-left: 2rem;
+        li {
+          svg {
+            margin-left: 1rem;
+            font-size: 2.4rem;
+          }
+          .options {
+            top: 3.4rem;
+            li {
+              font-size: 1.6rem;
+              padding: 0.3rem 3rem;
+            }
+          }
+        }
+      }
+    }
+    h3 {
+      font-size: 2.2rem;
+    }
+    small {
+      font-size: 1.2rem;
+      margin-bottom: 5rem;
+    }
   }
 }

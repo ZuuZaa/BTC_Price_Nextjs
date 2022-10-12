@@ -1,0 +1,6 @@
+
+export const BTC_ACTION_TYPES = {
+    SET_BTC: "@@SET-BTC",
+    SET_BTC_LOADING: "@@SET-BTC-LOADING",
+    SET_BTC_ERROR: "@@SET-BTC-ERROR",
+  }
